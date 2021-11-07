@@ -1,14 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Button, { ButtonType, ButtonSize } from "./components/Button/button";
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <Button>Hello</Button>
+        <Button btnType={ButtonType.Primary} disabled={true}>
+          Hello
+        </Button>
+        <Button btnType={ButtonType.Link} href="http://google.com">
+          Google
+        </Button>
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Edit
+          <code>src/App.tsx</code>
+          and save to reload.
         </p>
         <a
           className="App-link"
@@ -21,6 +27,6 @@ function App() {
       </header>
     </div>
   );
-}
+};
 
 export default App;
