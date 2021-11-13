@@ -1,21 +1,51 @@
+import styled from "@emotion/styled";
+import { Avatar, Card } from "antd";
+import "antd/dist/antd.css";
+import dayjs from "dayjs";
 import React from "react";
 import { Status } from "twitter-d";
+
 export interface Tweet extends Status {
   text: string;
 }
 
 const User: React.FC<any> = ({ user }) => {
-  return <img src={user.profile_image_url_https} alt="" />;
-};
-const TweetComponent: React.FC<{ tweet: Tweet }> = ({ tweet }) => {
-  console.log("🚀 ~ file: tweet.tsx ~ line 5 ~ tweet", tweet);
-  const { text, user, created_at } = tweet;
+  const { name } = user;
   return (
-    <div key={tweet.id}>
-      <User user={user} />
-      {text}
-    </div>
+    <Container>
+      <Avatar src={user.profile_image_url_https} alt="" />
+      <p>
+        <span>{name}</span>
+      </p>
+    </Container>
   );
 };
 
+const TweetComponent: React.FC<{ tweet: Tweet }> = ({ tweet }) => {
+  const { text, user, created_at } = tweet;
+  return (
+    <Card
+      key={tweet.id}
+      title={<User user={user} />}
+      type="inner"
+      extra={<span>{dayjs(created_at).format("YYYY-MM-DD HH:mm")}</span>}
+      style={{ width: 600, marginTop: 16, cursor: "pointer" }}
+    >
+      {text}
+    </Card>
+  );
+};
+
+const Container = styled.div`
+  display: flex;
+  overflow: scroll;
+  flex: 1;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  p {
+    margin: auto;
+    margin-left: 1rem;
+  }
+`;
 export default TweetComponent;
