@@ -1,11 +1,10 @@
-import TweetList from "components/TweetList/tweet-list";
-import { useTweets } from "utils/tweet";
-const App: React.FC = () => {
-  const { isLoading, error, data: tweets, retry } = useTweets();
+import TweetSaver from "components/TweetList";
+import React from "react";
 
+const App: React.FC = () => {
   return (
     <div className="App">
-      <TweetList tweets={tweets || []} />
+      <TweetSaver />
     </div>
   );
 };

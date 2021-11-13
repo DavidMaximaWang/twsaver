@@ -4,21 +4,27 @@ import { cleanObject } from "utils";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/useAsync";
 const tweetKey = "twitter.json";
-export const useTweets = (param?: Partial<Tweet>) => {
+export const useTweets = (param?: any) => {
   const { run, ...rest } = useAsync<Tweet[]>();
 
   const client = useHttp();
   const fetchTweets = () =>
     client(tweetKey, { data: cleanObject(param || {}) });
   useEffect(() => {
-    debugger;
     run(
       fetchTweets().then(
         (data: { statuses: Tweet[]; search_metadata: any }) => {
           return data.statuses;
         }
       ),
-      { retry: fetchTweets }
+      {
+        retry: () =>
+          fetchTweets().then(
+            (data: { statuses: Tweet[]; search_metadata: any }) => {
+              return data.statuses;
+            }
+          ),
+      }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param]);
