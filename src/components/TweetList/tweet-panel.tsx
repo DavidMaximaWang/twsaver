@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import TweetList from "components/TweetList/tweet-list";
+import { DragDropContext } from "react-beautiful-dnd";
 import { Form, Button, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import { useTweets } from "utils/tweet";
@@ -7,10 +8,12 @@ import { Tweet } from "./tweet";
 
 const TweetPanel: React.FC<any> = () => {
   return (
-    <Container>
-      <LeftPanel />
-      <RightPanel />
-    </Container>
+    <DragDropContext onDragEnd={() => {}}>
+      <Container>
+        <LeftPanel />
+        <RightPanel />
+      </Container>
+    </DragDropContext>
   );
 };
 
@@ -23,7 +26,7 @@ const LeftPanel: React.FC<any> = () => {
   return (
     <PanelContainer>
       <SearchPanel param={param} setParam={setParam} />
-      <TweetList tweets={tweets || []} />
+      <TweetList tweets={tweets || []} pos={"left"} />
     </PanelContainer>
   );
 };
@@ -38,7 +41,7 @@ const RightPanel: React.FC<any> = () => {
   return (
     <PanelContainer>
       <p>Number of Tweets: {savedTweets.length}</p>
-      <TweetList tweets={savedTweets || []} />
+      <TweetList tweets={savedTweets || []} pos={"right"} />
     </PanelContainer>
   );
 };

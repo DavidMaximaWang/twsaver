@@ -2,17 +2,25 @@ import React from "react";
 import { Tweet } from "./tweet";
 import TweetComponent from "./tweet";
 import styled from "@emotion/styled";
+import { Drag, Drop, DropChild } from "components/drag-and-drop";
 
-const TweetList = ({ tweets }: { tweets: Tweet[] }) => {
+type LeftRight = "left" | "right";
+const TweetList = ({ tweets, pos }: { tweets: Tweet[]; pos: LeftRight }) => {
   return (
-    <div>
-      {tweets.map((tweet) => {
-        return (
-          <TweetComponent key={tweet.id} tweet={tweet}>
-            {tweet.id}
-          </TweetComponent>
-        );
-      })}
+    <div style={{ width: "100%", height: "100%" }}>
+      <Drop type={"ROW"} direction={"vertical"} droppableId={pos}>
+        <DropChild style={{ minHeight: "1rem" }}>
+          {tweets.map((tweet, index) => (
+            <Drag key={tweet.id} draggableId={"_" + tweet.id} index={index}>
+              <div>
+                <TweetComponent key={tweet.id} tweet={tweet}>
+                  {tweet.id}
+                </TweetComponent>
+              </div>
+            </Drag>
+          ))}
+        </DropChild>
+      </Drop>
     </div>
   );
 };
