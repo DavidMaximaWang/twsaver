@@ -29,7 +29,13 @@ const TweetComponent: React.FC<{ tweet: Tweet }> = ({ tweet }) => {
       title={<User user={user} />}
       type="inner"
       extra={<span>{dayjs(created_at).format("YYYY-MM-DD HH:mm")}</span>}
-      style={{ width: 600, marginTop: 16, cursor: "pointer" }}
+      style={{
+        width: "auto",
+        margin: ".5rem",
+        boxSizing: "border-box",
+        marginTop: 16,
+        cursor: "pointer",
+      }}
     >
       {text}
     </Card>
