@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { cleanObject } from "utils";
 import { useHttp } from "utils/http";
 import { useAsync } from "utils/useAsync";
-const tweetKey = "twitter.json";
+const tweetKey = "tweets.json";
 export const useTweets = (param?: any) => {
   const { run, ...rest } = useAsync<Tweet[]>();
 

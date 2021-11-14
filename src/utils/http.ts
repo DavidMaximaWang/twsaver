@@ -13,10 +13,10 @@ export const http = async (
 ) => {
   const config = {
     method: "GET",
-    headers: {
-      Authorization: token ? `Bearer ${token}` : "",
-      "Content-Type": data ? "application/json" : "",
-    },
+    // headers: {
+    //   Authorization: token ? `Bearer ${token}` : "",
+    //   "Content-Type": data ? "application/json" : "",
+    // },
     ...customConfig,
   };
   if (config.method.toUpperCase() === "GET") {
