@@ -11,13 +11,18 @@ const TweetList = ({ tweets, pos }: { tweets: Tweet[]; pos: LeftRight }) => {
       <Drop type={"ROW"} direction={"vertical"} droppableId={pos}>
         <DropChild style={{ minHeight: "1rem" }}>
           {tweets.map((tweet, index) => (
-            <Drag key={tweet.id} draggableId={"_" + tweet.id} index={index}>
+            <StyledDrag
+              key={tweet.id}
+              draggableId={"_" + tweet.id}
+              index={index}
+              isDragDisabled={Boolean(tweet.saved)}
+            >
               <div>
                 <TweetComponent key={tweet.id} tweet={tweet}>
                   {tweet.id}
                 </TweetComponent>
               </div>
-            </Drag>
+            </StyledDrag>
           ))}
         </DropChild>
       </Drop>
@@ -35,4 +40,10 @@ const Container = styled.div`
   border-radius: 0.3rem;
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
+`;
+
+const StyledDrag = styled(Drag)<{
+  isDragDisabled?: boolean;
+}>`
+  width: ${(props) => (props.isDragDisabled ? "101px" : "201px")};
 `;

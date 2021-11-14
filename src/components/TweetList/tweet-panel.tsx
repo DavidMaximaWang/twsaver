@@ -7,25 +7,32 @@ import { useTweets } from "utils/tweet";
 import { Tweet } from "./tweet";
 
 const LOCAL_STORAGE_KEY = "tweetsaver";
-const TweetPanel: React.FC<any> = () => {
+const useTweetPanel = () => {
   const [param, setParam] = useState({ q: "", result_type: "popular" });
   const { isLoading, error, data, retry } = useTweets(param);
   const [tweets, setTweets] = useState<Tweet[]>(data || []);
-  const onSubmit = () => {
+  const [savedTweets, setSavedTweets] = useState<Tweet[]>([]);
+
+  const onSubmit = useCallback(() => {
     if (data) {
-      setTweets([...data]);
+      const tweets = [...data];
+      const savedTweetsIds = savedTweets.map((tweet) => tweet.id);
+      tweets.forEach((tweet) => {
+        if (savedTweetsIds.indexOf(tweet.id) >= 0) {
+          tweet.saved = true;
+        }
+      });
+      setTweets(tweets);
     } else {
       setTweets([]);
     }
-  };
-  const [savedTweets, setSavedTweets] = useState<Tweet[]>([]);
+  }, [data, savedTweets]);
 
   const onDragEnd = useCallback(
     ({ source, destination, type }: DropResult) => {
       if (!destination) {
         return;
       }
-      // board reorder
       if (type === "COLUMN") {
         console.log("ondragend column");
       } else if (type === "ROW") {
@@ -38,6 +45,7 @@ const TweetPanel: React.FC<any> = () => {
           leftTweets.splice(source.index, 1);
           setTweets(leftTweets);
           const rightTweets = [...savedTweets];
+          sourceTweet.saved = true;
           rightTweets.splice(destination.index + 1, 0, sourceTweet);
           setSavedTweets(rightTweets);
           localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(rightTweets));
@@ -52,6 +60,7 @@ const TweetPanel: React.FC<any> = () => {
           localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(rightTweets));
           const leftTweets = [...tweets];
           leftTweets.splice(destination.index + 1, 0, sourceTweet);
+          sourceTweet.saved = false;
           setTweets(leftTweets);
         }
       }
@@ -64,10 +73,17 @@ const TweetPanel: React.FC<any> = () => {
     const parsedTweets: Tweet[] = JSON.parse(savedTweetsString || "[]");
     setSavedTweets(parsedTweets);
   }, []);
+
+  return { param, setParam, onSubmit, onDragEnd, tweets, savedTweets };
+};
+
+const TweetPanel: React.FC<any> = () => {
+  const { param, setParam, onSubmit, onDragEnd, tweets, savedTweets } =
+    useTweetPanel();
+
   const searchPanel = (
     <SearchPanel param={param} setParam={setParam} onSubmit={onSubmit} />
   );
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Container>

@@ -7,6 +7,7 @@ import { Status } from "twitter-d";
 
 export interface Tweet extends Status {
   text: string;
+  saved?: boolean;
 }
 
 const User: React.FC<any> = ({ user }) => {
