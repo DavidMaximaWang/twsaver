@@ -9,11 +9,19 @@ import { Tweet } from "./tweet";
 const LOCAL_STORAGE_KEY = "tweetsaver";
 const useTweetPanel = () => {
   const [param, setParam] = useState({ q: "", result_type: "popular" });
-  const { isLoading, error, data, retry } = useTweets(param);
+  const [query, setQuery] = useState({});
+  const { isLoading, error, data, retry } = useTweets(query);
   const [tweets, setTweets] = useState<Tweet[]>(data || []);
   const [savedTweets, setSavedTweets] = useState<Tweet[]>([]);
 
   const onSubmit = useCallback(() => {
+    const q = param.q.trim();
+    if (q) {
+      setQuery({ ...param });
+    }
+  }, [param]);
+
+  useEffect(() => {
     if (data) {
       const tweets = [...data];
       const savedTweetsIds = savedTweets.map((tweet) => tweet.id);
@@ -23,8 +31,6 @@ const useTweetPanel = () => {
         }
       });
       setTweets(tweets);
-    } else {
-      setTweets([]);
     }
   }, [data, savedTweets]);
 
