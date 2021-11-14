@@ -1,3 +1,14 @@
+Start the proxy server:https://github.com/ruyadorno/twitter-proxy.git git clone git@github.com:ruyadorno/twitter-proxy.git
+
+create config file with your consumer key
+{
+"consumerKey": "XXXX",
+"consumerSecret": "XXX"
+} can also find one config file in my attachment
+start the server by npm start npm start ./config.json
+
+Start the app by twsaver project by npm start
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
