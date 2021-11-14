@@ -56,12 +56,14 @@
   "devDependencies": {
     "@commitlint/cli": "^14.1.0",
     "@commitlint/config-conventional": "^14.1.0",
+    "@testing-library/react-hooks": "^7.0.2",
     "@types/jsonp": "^0.2.1",
     "@types/qs": "^6.9.7",
     "@types/react-beautiful-dnd": "^13.1.2",
     "eslint-config-prettier": "^8.3.0",
     "husky": ">=6",
     "lint-staged": ">=10",
+    "msw": "^0.35.0",
     "prettier": "2.4.1",
     "twitter-d": "^0.4.0"
   },

@@ -25,7 +25,7 @@ const PageHeader: React.FC<any> = () => {
   );
 };
 
-const Author: React.FC<{ name: string; at: string; email?: string }> = ({
+export const Author: React.FC<{ name: string; at: string; email?: string }> = ({
   name,
   at,
 }) => {

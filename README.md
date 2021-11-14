@@ -9,6 +9,8 @@ start the server by npm start npm start ./config.json
 
 Start the app by twsaver project by npm start
 
+Test: npm run test
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
