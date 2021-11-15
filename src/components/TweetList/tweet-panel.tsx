@@ -83,19 +83,24 @@ const useTweetPanel = () => {
   return { param, setParam, onSubmit, onDragEnd, tweets, savedTweets };
 };
 
+const SearchContext = React.createContext<any>(null);
+SearchContext.displayName = "SearchContext";
+export { SearchContext };
+
 const TweetPanel: React.FC<any> = () => {
   const { param, setParam, onSubmit, onDragEnd, tweets, savedTweets } =
     useTweetPanel();
-
   const searchPanel = (
     <SearchPanel param={param} setParam={setParam} onSubmit={onSubmit} />
   );
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Container>
-        <LeftPanel tweets={tweets} searchPanel={searchPanel} />
-        <RightPanel tweets={savedTweets} />
-      </Container>
+      <SearchContext.Provider value={{ param }}>
+        <Container>
+          <LeftPanel tweets={tweets} searchPanel={searchPanel} />
+          <RightPanel tweets={savedTweets} />
+        </Container>
+      </SearchContext.Provider>
     </DragDropContext>
   );
 };

@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 import { Avatar, Card } from "antd";
 import "antd/dist/antd.css";
+import Mark from "components/mark";
 import dayjs from "dayjs";
-import React from "react";
+import React, { useContext } from "react";
 import { Status } from "twitter-d";
+import { SearchContext } from "./tweet-panel";
 
 export interface Tweet extends Status {
   text: string;
@@ -24,6 +26,7 @@ const User: React.FC<any> = ({ user }) => {
 
 const TweetComponent: React.FC<{ tweet: Tweet }> = ({ tweet }) => {
   const { text, user, created_at } = tweet;
+  const { param } = useContext(SearchContext);
   return (
     <Card
       key={tweet.id}
@@ -38,7 +41,8 @@ const TweetComponent: React.FC<{ tweet: Tweet }> = ({ tweet }) => {
         cursor: "pointer",
       }}
     >
-      {text}
+      {/* {text} */}
+      <Mark keyword={param.q} name={text} />
     </Card>
   );
 };
